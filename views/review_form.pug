@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='content') Content:
+      input#content.form-control(type='text' placeholder='Review content' name='content' required='true' value=(undefined===review ? '' : review.content))
+    div.form-group
+      label(for='movie') Movie:
+      input#movie.form-control(type='text' placeholder='Movie title' name='movie' required='true' value=(undefined===review ? '' : review.movie))
+    div.form-group
+      label(for='') Date:
+      input#date.form-control(type='date' name='date' value=(undefined===review ? '' : review.date))
+
+  
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+   ul
+    for error in errors
+     li!= error.msg

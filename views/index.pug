@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #[em Movie-Review], a demo for movie review storing website by Difei for CS5610 assignment 2.
+  p You can create, read, update and delete your review on a movie. For simplicity, it only includes one collection for demonstration.
+
+  h1 Review count
+
+  if error
+    p Error getting dynamic content.
+  else
+    ul
+      li #[strong Reviews:] !{data.review_count}
