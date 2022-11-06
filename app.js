@@ -4,21 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const catalogRouter = require("./routes/catalog");
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
 var app = express();
-
-// Set up mongoose connection
-const mongoose = require("mongoose");
-//Using .env
-require('dotenv').config()
-const mongoDB = process.env.DATABASE_URL;
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,12 +21,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/catalog', catalogRouter);
 
-
-app.use((req, res, next) => {
-  res.status(404).send("Oh stop being naughty plz. You shouldn't be here! -- 404");
-})
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -49,7 +37,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 module.exports = app;
